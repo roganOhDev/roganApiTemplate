@@ -1,5 +1,11 @@
 package com.example.api.exception;
 
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.support.WebExchangeBindException;
+
 @RestControllerAdvice
 public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
@@ -12,8 +18,8 @@ public class ExceptionHandler {
         return ResponseEntity.badRequest().body(new ExceptionDto(e));
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(RException.class)
-    public ResponseEntity<ExceptionDto> exception(RException e) {
+    @org.springframework.web.bind.annotation.ExceptionHandler(ApiException.class)
+    public ResponseEntity<ExceptionDto> exception(ApiException e) {
         return ResponseEntity.badRequest().body(new ExceptionDto(e));
     }
 

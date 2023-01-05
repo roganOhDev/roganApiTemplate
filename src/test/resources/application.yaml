@@ -1,0 +1,19 @@
+spring:
+  flyway:
+    enabled: false
+
+  datasource:
+    username: root
+    password: password
+    url: jdbc:mysql://localhost:13307/{schema}?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    dbcp2:
+      max-total: 3
+      max-wait-millis: 3000
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    defer-datasource-initialization: true

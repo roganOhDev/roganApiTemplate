@@ -19,7 +19,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -34,6 +36,33 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+}
+
+task createTestDbScript(type: Exec) {
+    group "test"
+    workingDir "${projectDir}/src/test/resources/script"
+    commandLine "sh", "create_test_db_script.sh", "${projectDir}/docker/mysql/app/init.d", "${projectDir}/docker/mysql/log/init.d", false
+    doLast {
+        println "Test DB script created!"
+    }
+}
+
+task testDbUp(type: Exec) {
+    group "test"
+    workingDir "${projectDir}"
+    commandLine "docker", "compose", "-f", "./docker/docker-compose-test-db.yml", "-p", "test", "up", "-d"
+    doLast {
+        println "Test Db Up!"
+    }
+}
+
+task testDbDown(type: Exec) {
+    group "test"
+    workingDir "${projectDir}"
+    commandLine "docker", "compose", "-f", "./docker/docker-compose-test-db.yml", "-p", "test", "down"
+    doLast {
+        println "Test Db Down!"
+    }
 }
