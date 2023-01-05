@@ -43,7 +43,7 @@ test {
 task createTestDbScript(type: Exec) {
     group "test"
     workingDir "${projectDir}/src/test/resources/script"
-    commandLine "sh", "create_test_db_script.sh", "${projectDir}/docker/mysql/app/init.d", "${projectDir}/docker/mysql/log/init.d", false
+    commandLine "sh", "create_test_db_script.sh", "${projectDir}/docker/mysql/app/init.d", false
     doLast {
         println "Test DB script created!"
     }
